@@ -20,12 +20,10 @@ jobs:
       - name: Run AWS CLI command
         run: |
           aws rds describe-db-engine-versions --region eu-central-1 --engine postgres --engine-version 14 --query "DBEngineVersions[*].{version:EngineVersion}" --output json > versions.json
-      - name: Read versions from JSON file
-        id: versions
-        run: |
-          VERSIONS=$(jq -r '.[].version' versions.json | paste -sd "," -)
-          echo "::set-output name=versions::$VERSIONS"
-      - name: Create tags for each version
-        uses: actions-ecosystem/action-push-tag@v1
+      - run: echo "previous_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo '')" >> $GITHUB_ENV
+      - name: Create Tag
+        id: create_tag
+        uses: jaywcjlove/create-tag-action@main
+        if: env.previous_tag
         with:
-          tags: ${{ steps.versions.outputs.versions }}
+          package-path: ./versions.json
