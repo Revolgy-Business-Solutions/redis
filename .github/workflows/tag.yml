@@ -1,5 +1,7 @@
 name: Tag with PostgreSQL versions
 on:
+  workflow_dispatch:
+    inputs: {}
   schedule:
     - cron: '0 0 * * 1'
 jobs:
