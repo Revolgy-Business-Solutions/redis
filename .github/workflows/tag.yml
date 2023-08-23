@@ -26,6 +26,6 @@ jobs:
           VERSIONS=$(jq -r '.[].version' versions.json | paste -sd "," -)
           echo "::set-output name=versions::$VERSIONS"
       - name: Create tags for each version
-        uses: rickstaa/action-create-tag@v1.0.0
-        with:
-          tags: ${{ steps.versions.outputs.versions }}
+        run: |
+          chmod +x ./create-tags.sh # make the script executable
+          ./create-tags.sh ${{ steps.versions.outputs.versions }}
