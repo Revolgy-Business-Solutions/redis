@@ -24,6 +24,6 @@ jobs:
       - name: Create Tag
         id: create_tag
         uses: jaywcjlove/create-tag-action@main
-        if: env.previous_tag
+      #  if: env.previous_tag
         with:
           package-path: ./versions.json
