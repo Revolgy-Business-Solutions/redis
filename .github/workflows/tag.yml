@@ -23,7 +23,7 @@ jobs:
       - run: echo "previous_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo '')" >> $GITHUB_ENV
       - name: Create Tag
         id: create_tag
-        uses: jaywcjlove/create-tag-action
+        uses: jaywcjlove/create-tag-action@v1.3.18
       #  if: env.previous_tag
         with:
           package-path: ./versions.json
