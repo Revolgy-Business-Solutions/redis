@@ -1,0 +1,28 @@
+name: Tag with PostgreSQL versions
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - name: Run AWS CLI command
+        run: |
+          aws rds describe-db-engine-versions --region eu-central-1 --engine postgres --engine-version 14 --query "DBEngineVersions[*].{version:EngineVersion}" --output json > versions.json
+      - name: Read versions from JSON file
+        id: versions
+        run: |
+          VERSIONS=$(jq -r '.[].version' versions.json | paste -sd "," -)
+          echo "::set-output name=versions::$VERSIONS"
+      - name: Create tags for each version
+        uses: actions-ecosystem/action-create-tags@v1
+        with:
+          tags: ${{ steps.versions.outputs.versions }}
