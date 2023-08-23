@@ -23,9 +23,10 @@ jobs:
       - name: Read versions from JSON file
         id: versions
         run: |
-          VERSIONS=$(jq -r '.[].version' versions.json | paste -sd "," -)
+          VERSIONS=$(jq -r '.[].version' versions.json | paste -sd " " -)
           echo "::set-output name=versions::$VERSIONS"
       - name: Create tags for each version
         run: |
-          chmod +x ./create-tags.sh # make the script executable
-          ./create-tags.sh ${{ steps.versions.outputs.versions }}
+          chmod +x ./create-tags.sh
+          read -a VERSIONS <<< "${{ steps.versions.outputs.versions }}"
+          ./create-tags.sh "${VERSIONS[@]}"
