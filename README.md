@@ -4,7 +4,7 @@
 This repository contains tags with all versions of AWS Elasticache of type `redis` that are updated regularly using the official AWS Elasticache API. The purpose of this repo is to provide a datasource for **[Renovate](https://docs.renovatebot.com/)** to monitor and update the database engine versions in your Terraform files. 
 
 ### How it works 
-This repo uses a GitHub Action to fetch the latest versions from the AWS API and create or update the corresponding tags. The tags are named as `engine_version`, such as *1.4.14*. The tags are sorted by the docker versioning scheme, which follows the semantic versioning rules. 
+This repo uses a GitHub Action to fetch the latest versions from the AWS API and create or update the corresponding tags. The tags are named as `engine_version`, such as *5.0.4*. The tags are sorted by the docker versioning scheme, which follows the semantic versioning rules. 
 The GitHub Action runs every Monday at 00:00 UTC and pushes any new or updated tags to this repo. 
 
 ### How to use
