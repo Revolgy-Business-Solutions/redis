@@ -1,4 +1,4 @@
-name: Tag with Memcached versions
+name: Tag with Redis versions
 on:
   workflow_dispatch:
     inputs: {}
@@ -19,7 +19,7 @@ jobs:
           aws-region: eu-central-1
       - name: Get AWS Elasticache versions
         run: |
-          aws elasticache describe-cache-engine-versions --engine memcached --query "CacheEngineVersions[*].{version:EngineVersion}" --output json > versions.json
+          aws elasticache describe-cache-engine-versions --engine redis --query "CacheEngineVersions[*].{version:EngineVersion}" --output json > versions.json
       - name: Read versions from JSON file
         id: versions
         run: |
