@@ -17,9 +17,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
-      - name: Get AWS RDS versions
+      - name: Get AWS Elasticache versions
         run: |
-          aws rds describe-db-engine-versions --region eu-central-1 --engine postgres --query "DBEngineVersions[*].{version:EngineVersion}" --output json > versions.json
+          aws elasticache describe-cache-engine-versions --engine memcached --query "CacheEngineVersions[*].{version:EngineVersion}" --output json > versions.json
       - name: Read versions from JSON file
         id: versions
         run: |
