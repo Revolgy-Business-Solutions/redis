@@ -1,4 +1,4 @@
-name: Tag with PostgreSQL versions
+name: Tag with Memcached versions
 on:
   workflow_dispatch:
     inputs: {}
